@@ -67,9 +67,9 @@ const MILESTONES = [
   {
     id: 'his-birthday',
     month: 11, day: 26, year: 2003, // ← SỬA NGÀY SINH NHẬT ANH TẠI ĐÂY
-    title: 'Sinh Nhật Anh Phúc',
+    title: 'Sinh Nhật Phúc',
     icon: '🎂',
-    message: 'Happy Birthday anh yêu!',
+    message: 'Happy Birthday!',
     type: 'birthday'
   },
   // Thêm sinh nhật em (sửa ngày phù hợp)
