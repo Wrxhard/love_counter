@@ -139,14 +139,38 @@ function generateTimeline() {
     photos: ['images/memories/dalat-1.jpg', 'images/memories/dalat-2.jpg', 'images/memories/dalat-3.jpg', 'images/memories/dalat-4.jpg', 'images/memories/dalat-5.jpg', 'images/memories/dalat-6.jpg']
   });
 
-  // Làm Gốm - Tháng 5/2025
+  // Làm Gốm - 01/05/2025
   items.push({
-    date: new Date(2025, 5, 1), 
+    date: new Date(2025, 4, 1), 
     title: 'Làm Gốm Cùng Nhau',
     desc: 'Trải nghiệm làm gốm siêu vui và đáng nhớ 🏺',
     icon: '🎨',
     special: true,
-    photos: ['video/lam-gom.mp4'] // Using video as main visual if supported, or thumbnail
+    photos: ['video/lam-gom.mp4']
+  });
+
+  // Cafe - 20/06/2025
+  items.push({
+    date: new Date(2025, 5, 20),
+    title: 'Hẹn Hò Cafe',
+    desc: 'Những buổi cafe tâm sự, cùng nhau ngắm phố phường ☕🍰',
+    icon: '☕',
+    special: true,
+    photos: [
+      'images/memories/cafe-1.jpg',
+      'images/memories/cafe-2.jpg',
+      'images/memories/cafe-3.jpg'
+    ]
+  });
+
+  // Bắn Cung - 13/07/2025
+  items.push({
+    date: new Date(2025, 6, 13), // 13/07/2025
+    title: 'Trải Nghiệm Bắn Cung',
+    desc: 'Lần đầu đi bắn cung 🏹🎯',
+    icon: '🏹',
+    special: true,
+    photos: ['images/memories/bancung-1.jpg', 'images/memories/bancung-2.jpg']
   });
 
   // Đi Chùa - Tháng 8/2025
