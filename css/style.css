@@ -1178,8 +1178,8 @@ a { text-decoration: none; color: inherit; }
   scroll-snap-align: center;
   border-radius: 12px;
   overflow: hidden;
-  border: 2px solid var(--pink-200);
-  background: var(--pink-50);
+  /* border: 2px solid var(--pink-200); */ /* Removed frame */
+  background: transparent; /* Removed white bg */
   transition: transform 0.3s ease;
 }
 
@@ -1193,19 +1193,23 @@ a { text-decoration: none; color: inherit; }
   height: 120px;
   object-fit: cover;
   display: block;
-  transition: transform 0.4s ease;
+  border-radius: 12px; /* Add radius to image directly */
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1); /* Subtle shadow for depth */
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
 }
 
 .memory-frame:hover .memory-photo {
-  transform: scale(1.08);
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(236, 72, 153, 0.25);
 }
 
 .memory-caption {
-  padding: 6px 8px;
-  font-size: 0.7rem;
-  font-weight: 500;
-  color: var(--warm-mid);
+  padding: 6px 4px 0; /* Adjusted padding */
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--warm-dark); /* Darker text for contrast */
   text-align: center;
+  text-shadow: none;
 }
 
 .memory-placeholder {
