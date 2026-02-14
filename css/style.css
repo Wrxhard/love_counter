@@ -1388,6 +1388,25 @@ a { text-decoration: none; color: inherit; }
   .gallery-next { right: 8px; }
   .gallery-close { top: 12px; right: 12px; }
   .gallery-caption { font-size: 0.9rem; }
+  
+  /* Mobile Button Fix */
+  .question-text {
+    font-size: 1.5rem; /* Smaller text */
+    margin-bottom: 30px;
+  }
+  
+  .button-group {
+    gap: 15px; /* Smaller gap */
+    flex-direction: column; /* Stack buttons on very small screens if needed, or row with less gap */
+    min-height: auto;
+  }
+  
+  .answer-btn {
+    padding: 12px 30px; /* Smaller padding */
+    font-size: 1rem; /* Smaller font */
+    width: 100%; /* Full width for easy tapping */
+    border-radius: 50px;
+  }
 }
 
 /* ── Photo Gallery Lightbox ── */

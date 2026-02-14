@@ -619,6 +619,8 @@ const MEMORIES = [
   { src: 'images/memories/chua-3.jpg', caption: 'Đi Chùa — 3' },
   { src: 'images/memories/chua-4.jpg', caption: 'Đi Chùa — 4' },
   { src: 'images/memories/chua-5.jpg', caption: 'Đi Chùa — 5' },
+  // Video example
+  // { type: 'video', src: 'images/memories/video-1.mp4', caption: 'Video Kỷ Niệm' },
   // Thêm ảnh kỷ niệm mới ở đây:
   // { src: 'images/memories/ten-file.jpg', caption: 'Mô tả' },
 ];
