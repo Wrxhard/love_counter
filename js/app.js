@@ -1008,9 +1008,33 @@ function setupScrollReveal() {
 function setupNavigation() {
   const links = document.querySelectorAll('.nav-link[data-section]');
   const sections = document.querySelectorAll('section');
+  
+  let isManualScroll = false;
+  let scrollTimeout;
+
+  // Click event for instant feedback
+  links.forEach(link => {
+    link.addEventListener('click', (e) => {
+      // Set flag to ignore observer
+      isManualScroll = true;
+      clearTimeout(scrollTimeout);
+      
+      // Update active class immediately
+      links.forEach(l => l.classList.remove('active'));
+      link.classList.add('active');
+      
+      // Reset flag after animation (approx 1s)
+      scrollTimeout = setTimeout(() => {
+        isManualScroll = false;
+      }, 1000);
+    });
+  });
 
   // Active link on scroll
   const observer = new IntersectionObserver((entries) => {
+    // If manual scroll, ignore updates
+    if (isManualScroll) return;
+    
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         links.forEach(link => {
@@ -1018,7 +1042,7 @@ function setupNavigation() {
         });
       }
     });
-  }, { threshold: 0.3 });
+  }, { threshold: [0.2, 0.5] }); 
 
   sections.forEach(section => observer.observe(section));
 }
