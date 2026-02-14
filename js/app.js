@@ -66,7 +66,7 @@ const MILESTONES = [
   // Thêm sinh nhật anh (sửa ngày phù hợp)
   {
     id: 'his-birthday',
-    month: 11, day: 26, // ← SỬA NGÀY SINH NHẬT ANH TẠI ĐÂY
+    month: 11, day: 26, year: 2003, // ← SỬA NGÀY SINH NHẬT ANH TẠI ĐÂY
     title: 'Sinh Nhật Anh Phúc',
     icon: '🎂',
     message: 'Happy Birthday anh yêu!',
@@ -75,7 +75,7 @@ const MILESTONES = [
   // Thêm sinh nhật em (sửa ngày phù hợp)
   {
     id: 'her-birthday',
-    month: 4, day: 16, // ← SỬA NGÀY SINH NHẬT EM TẠI ĐÂY
+    month: 4, day: 16, year:2002,// ← SỬA NGÀY SINH NHẬT EM TẠI ĐÂY
     title: 'Sinh Nhật Em Lưu',
     icon: '🎂',
     message: 'Happy Birthday em yêu! Chúc em mãi xinh đẹp!',
