@@ -593,8 +593,13 @@ function showMilestoneModal(milestone) {
 
   // Populate content
   document.getElementById('modal-title').textContent = `${milestone.icon} ${milestone.title}`;
-  // Always show current date for milestone modal (anniversary date)
-  document.getElementById('modal-date').textContent = formatDateVN(now);
+  // Use milestone year if available (e.g. start date), otherwise use current date (for recurring)
+  if (milestone.year) {
+    const mDate = new Date(milestone.year, milestone.month - 1, milestone.day);
+    document.getElementById('modal-date').textContent = formatDateVN(mDate);
+  } else {
+    document.getElementById('modal-date').textContent = formatDateVN(now);
+  }
   document.getElementById('modal-message').textContent = milestone.message;
 
   // Days count
@@ -987,6 +992,7 @@ window.triggerMilestoneForTimeline = function(index) {
     message: item.desc,
     month: item.date.getMonth() + 1,
     day: item.date.getDate(),
+    year: item.date.getFullYear(),
   });
 };
 
