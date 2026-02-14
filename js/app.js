@@ -390,12 +390,20 @@ class MusicPlayer {
     this.isPlaying ? this.pause() : this.play();
   }
 
-  play() {
+  async play() {
     if (this.playlist.length === 0) return;
-    this.audio.play().catch(() => {});
-    this.isPlaying = true;
-    this.updatePlayButton();
-    this.visualizer.classList.add('playing');
+    
+    try {
+        await this.audio.play();
+        this.isPlaying = true;
+        this.updatePlayButton();
+        this.visualizer.classList.add('playing');
+    } catch (err) {
+        console.error('Playback failed:', err);
+        this.isPlaying = false;
+        this.updatePlayButton();
+        throw err; // Re-throw for caller to handle
+    }
   }
 
   pause() {
@@ -1105,17 +1113,36 @@ document.addEventListener('DOMContentLoaded', () => {
   const player = new MusicPlayer();
   renderPlaylist(player);
   setupPlaylistToggle();
-
+  
   // Autoplay on first user interaction (browsers require user gesture)
-  const autoplayOnce = () => {
-    if (!player.isPlaying && PLAYLIST.length > 0) {
-      player.play();
+  // We use a shared handler that tries to play, and only removes itself if successful.
+  const tryAutoplay = async () => {
+    if (player.isPlaying) {
+        // Already playing, clean up
+        document.removeEventListener('click', tryAutoplay);
+        document.removeEventListener('touchstart', tryAutoplay);
+        document.removeEventListener('keydown', tryAutoplay);
+        return;
     }
-    document.removeEventListener('click', autoplayOnce);
-    document.removeEventListener('touchstart', autoplayOnce);
+    
+    if (PLAYLIST.length > 0) {
+      try {
+        await player.play();
+        // If success, remove listeners
+        document.removeEventListener('click', tryAutoplay);
+        document.removeEventListener('touchstart', tryAutoplay);
+        document.removeEventListener('keydown', tryAutoplay);
+      } catch (err) {
+        // Autoplay failed (e.g. still no interaction or policy), keep listeners
+        console.log('Autoplay deferred:', err);
+      }
+    }
   };
-  document.addEventListener('click', autoplayOnce);
-  document.addEventListener('touchstart', autoplayOnce);
+  
+  document.addEventListener('click', tryAutoplay);
+  // IOS often needs touchend or click, touchstart might be too early for audio context
+  document.addEventListener('touchstart', tryAutoplay, { passive: true });
+  document.addEventListener('keydown', tryAutoplay);
 
   // 5. Timeline
   renderTimeline();
