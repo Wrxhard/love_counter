@@ -119,6 +119,16 @@ function generateTimeline() {
   });
 
 
+  // Handmade by Quỳnh Lưu - Tháng 3/2025
+  items.push({
+    date: new Date(2025, 2, 10), // 10/03/2025
+    title: 'Handmade by Quỳnh Lưu',
+    desc: 'Món quà thêu tay xinh xắn siêu đáng yêu 🧵🐱',
+    icon: '🎁',
+    special: true,
+    photos: ['images/memories/handmade-1.jpg']
+  });
+
   // Chuyến đi Đà Lạt - Tháng 6/2025
   items.push({
     date: new Date(2025, 5, 15),
@@ -129,14 +139,39 @@ function generateTimeline() {
     photos: ['images/memories/dalat-1.jpg', 'images/memories/dalat-2.jpg', 'images/memories/dalat-3.jpg', 'images/memories/dalat-4.jpg', 'images/memories/dalat-5.jpg', 'images/memories/dalat-6.jpg']
   });
 
+  // Làm Gốm - Tháng 5/2025
+  items.push({
+    date: new Date(2025, 5, 1), 
+    title: 'Làm Gốm Cùng Nhau',
+    desc: 'Trải nghiệm làm gốm siêu vui và đáng nhớ 🏺',
+    icon: '🎨',
+    special: true,
+    photos: ['video/lam-gom.mp4'] // Using video as main visual if supported, or thumbnail
+  });
+
   // Đi Chùa - Tháng 8/2025
   items.push({
     date: new Date(2025, 7, 15),
     title: 'Đi Chùa Cùng Nhau',
-    desc: 'Cùng nhau đi chùa cầu bình an',
-    icon: '🙏',
+    desc: 'Cùng nhau đi chùa cầu bình an 🙏',
+    icon: '⛩️',
     special: true,
     photos: ['images/memories/chua-1.jpg', 'images/memories/chua-2.jpg', 'images/memories/chua-3.jpg', 'images/memories/chua-4.jpg', 'images/memories/chua-5.jpg']
+  });
+
+  // Photobooth - 22/11/2025
+  items.push({
+    date: new Date(2025, 10, 22),
+    title: 'Chụp Ảnh Photobooth',
+    desc: 'Lưu giữ những khoảnh khắc nhí nhố bên nhau 📸',
+    icon: '🎞️',
+    special: true,
+    photos: [
+      'images/memories/photobooth-1.jpg',
+      'images/memories/photobooth-2.jpg',
+      'images/memories/photobooth-3.jpg',
+      'images/memories/photobooth-4.jpg'
+    ]
   });
 
 
@@ -619,8 +654,10 @@ const MEMORIES = [
   { src: 'images/memories/chua-3.jpg', caption: 'Đi Chùa — 3' },
   { src: 'images/memories/chua-4.jpg', caption: 'Đi Chùa — 4' },
   { src: 'images/memories/chua-5.jpg', caption: 'Đi Chùa — 5' },
-  // Video example
-  // { type: 'video', src: 'images/memories/video-1.mp4', caption: 'Video Kỷ Niệm' },
+  // Video Làm Gốm
+  { type: 'video', src: 'video/lam-gom.mp4', caption: 'Làm Gốm Cùng Nhau 🏺' },
+  // Handmade
+  { src: 'images/memories/handmade-1.jpg', caption: 'Handmade by Quỳnh Lưu 🧵' },
   // Thêm ảnh kỷ niệm mới ở đây:
   // { src: 'images/memories/ten-file.jpg', caption: 'Mô tả' },
 ];
@@ -690,17 +727,43 @@ function closeGallery() {
 }
 
 function updateGalleryPhoto() {
+  const stage = document.querySelector('.gallery-stage');
   const photo = document.getElementById('gallery-photo');
+  let video = document.getElementById('gallery-video');
   const caption = document.getElementById('gallery-caption');
   const counter = document.getElementById('gallery-counter');
+  
   const mem = galleryPhotos[galleryCurrentIndex];
+  const isVideo = mem.type === 'video' || mem.src.endsWith('.mp4');
   
-  // Fade out
-  photo.classList.add('switching');
+  // Create video element if not exists
+  if (!video) {
+    video = document.createElement('video');
+    video.id = 'gallery-video';
+    video.className = 'gallery-photo'; // Reuse same class for style
+    video.controls = true;
+    video.style.display = 'none';
+    photo.parentNode.insertBefore(video, photo.nextSibling);
+  }
   
+  // Fade out transition (simplified)
+  if(photo) photo.style.opacity = '0.5';
+  if(video) video.style.opacity = '0.5';
+
   setTimeout(() => {
-    photo.src = mem.src;
-    photo.alt = mem.caption;
+    if (isVideo) {
+        photo.style.display = 'none';
+        video.style.display = 'block';
+        video.src = mem.src;
+        // video.play(); // Optional: Auto play
+    } else {
+        video.style.display = 'none';
+        video.pause(); // Stop video if switching to image
+        photo.style.display = 'block';
+        photo.src = mem.src;
+        photo.alt = mem.caption;
+    }
+    
     caption.textContent = mem.caption;
     counter.textContent = `${galleryCurrentIndex + 1} / ${galleryPhotos.length}`;
     
@@ -710,7 +773,9 @@ function updateGalleryPhoto() {
     });
     
     // Fade in
-    photo.classList.remove('switching');
+    if(photo) photo.style.opacity = '1';
+    if(video) video.style.opacity = '1';
+    
   }, 200);
 }
 
@@ -781,13 +846,36 @@ function renderTimeline() {
     el.dataset.index = i;
 
     const dateStr = formatDateVN(item.date);
-    const heroPhoto = item.photos[0];
+    const heroSrc = item.photos[0];
+    const isHeroVideo = heroSrc.endsWith('.mp4');
+    
+    // Build Hero HTML (Image or Video)
+    let heroHTML = '';
+    if (isHeroVideo) {
+      heroHTML = `
+        <video class="timeline-hero-photo" src="${heroSrc}" controls style="object-fit: cover;"></video>
+      `;
+    } else {
+      heroHTML = `
+        <img src="${heroSrc}" alt="${item.title}" class="timeline-hero-photo" loading="lazy" />
+        <div class="timeline-hero-overlay">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+        </div>
+      `;
+    }
+
     const thumbPhotos = item.photos.slice(1, 4); // show up to 3 thumbnails
 
     // Build thumbnail HTML
     const thumbsHTML = thumbPhotos.length > 0
       ? `<div class="timeline-thumbs">
-          ${thumbPhotos.map((src, ti) => `<img src="${src}" alt="${item.title}" class="timeline-thumb" data-gallery-index="${ti + 1}" loading="lazy" />`).join('')}
+          ${thumbPhotos.map((src, ti) => {
+             const isVideo = src.endsWith('.mp4');
+             if (isVideo) {
+                 return `<video src="${src}" class="timeline-thumb" data-gallery-index="${ti + 1}" style="object-fit: cover;"></video>`;
+             }
+             return `<img src="${src}" alt="${item.title}" class="timeline-thumb" data-gallery-index="${ti + 1}" loading="lazy" />`;
+          }).join('')}
           ${item.photos.length > 4 ? `<span class="timeline-thumb-more">+${item.photos.length - 4}</span>` : ''}
         </div>`
       : '';
@@ -796,10 +884,7 @@ function renderTimeline() {
       <div class="timeline-dot"></div>
       <div class="timeline-card timeline-photo-card">
         <div class="timeline-hero-wrap" data-gallery-index="0">
-          <img src="${heroPhoto}" alt="${item.title}" class="timeline-hero-photo" loading="lazy" />
-          <div class="timeline-hero-overlay">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
-          </div>
+          ${heroHTML}
         </div>
         ${thumbsHTML}
         <div class="timeline-card-body">
@@ -809,29 +894,39 @@ function renderTimeline() {
           <p class="timeline-desc">${item.desc}</p>
           <button class="view-memory-btn view-photos-btn">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
-            Xem ${item.photos.length} Ảnh
+            Xem ${item.photos.length} FILE
           </button>
         </div>
       </div>
     `;
 
-    // Click hero photo → open gallery
+    // Click hero photo/video → open gallery
+    // Note: If controls are enabled on video, click might play video instead of opening gallery. 
+    // We can add a button or overlay to open gallery for video if needed.
+    // For now, let's allow clicking the wrapper (if overlay exists) or the video itself.
     const heroWrap = el.querySelector('.timeline-hero-wrap');
-    heroWrap.addEventListener('click', () => {
+    heroWrap.addEventListener('click', (e) => {
+      // If clicking directly on controls of a video, don't open gallery
+      if (e.target.tagName === 'VIDEO') return; 
+
       const galleryPhotos = item.photos.map((src, idx) => ({
         src,
-        caption: `${item.title} — Ảnh ${idx + 1}`
+        caption: `${item.title} — ${idx + 1}`,
+        type: src.endsWith('.mp4') ? 'video' : 'image'
       }));
       openGallery(0, galleryPhotos);
     });
 
     // Click thumbnails → open gallery at that index
     el.querySelectorAll('.timeline-thumb').forEach(thumb => {
-      thumb.addEventListener('click', () => {
+      thumb.addEventListener('click', (e) => {
+        // Prevent opening if clicking video controls (if present)
+        // Thumbs usually small, maybe no controls?
         const idx = parseInt(thumb.dataset.galleryIndex);
         const galleryPhotos = item.photos.map((src, j) => ({
           src,
-          caption: `${item.title} — Ảnh ${j + 1}`
+          caption: `${item.title} — ${j + 1}`,
+          type: src.endsWith('.mp4') ? 'video' : 'image'
         }));
         openGallery(idx, galleryPhotos);
       });
@@ -841,7 +936,8 @@ function renderTimeline() {
     el.querySelector('.view-photos-btn').addEventListener('click', () => {
       const galleryPhotos = item.photos.map((src, idx) => ({
         src,
-        caption: `${item.title} — Ảnh ${idx + 1}`
+        caption: `${item.title} — ${idx + 1}`,
+        type: src.endsWith('.mp4') ? 'video' : 'image'
       }));
       openGallery(0, galleryPhotos);
     });
