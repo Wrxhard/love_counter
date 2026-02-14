@@ -593,13 +593,10 @@ function showMilestoneModal(milestone) {
 
   // Populate content
   document.getElementById('modal-title').textContent = `${milestone.icon} ${milestone.title}`;
-  // Use milestone year if available (e.g. start date), otherwise use current date (for recurring)
-  if (milestone.year) {
-    const mDate = new Date(milestone.year, milestone.month - 1, milestone.day);
-    document.getElementById('modal-date').textContent = formatDateVN(mDate);
-  } else {
-    document.getElementById('modal-date').textContent = formatDateVN(now);
-  }
+  // Display date using milestone properties
+  const year = milestone.year || now.getFullYear();
+  const mDate = new Date(year, milestone.month - 1, milestone.day);
+  document.getElementById('modal-date').textContent = formatDateVN(mDate);
   document.getElementById('modal-message').textContent = milestone.message;
 
   // Days count
@@ -1327,4 +1324,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 11. Love Question
   setupLoveQuestion();
+
+  // 12. Display Today's Date (Dynamic)
+  const todayDiv = document.getElementById('today-date');
+  if (todayDiv) {
+    const now = new Date();
+    const d = String(now.getDate()).padStart(2, '0');
+    const m = String(now.getMonth() + 1).padStart(2, '0');
+    const y = now.getFullYear();
+    todayDiv.textContent = `${d} · ${m} · ${y}`;
+  }
 });
