@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Love Days – Phúc ♥ Quỳnh Lưu</title>
+  <meta name="description" content="Đếm ngày yêu thương – Nguyễn Trọng Phúc & Đặng Thị Quỳnh Lưu">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💕</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ===== FLOATING HEARTS CANVAS ===== -->
+  <canvas id="hearts-canvas" aria-hidden="true"></canvas>
+
+  <!-- ===== NAVIGATION ===== -->
+  <nav class="nav glass" id="main-nav">
+    <a href="#home" class="nav-link active" data-section="home">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+      <span>Trang Chủ</span>
+    </a>
+    <a href="#timeline" class="nav-link" data-section="timeline">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
+      <span>Hành Trình</span>
+    </a>
+    <button class="nav-link" id="playlist-toggle-btn" type="button" aria-label="Mở playlist nhạc" style="display:none">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3v9.28c-.47-.17-.97-.28-1.5-.28C8.01 12 6 14.01 6 16.5S8.01 21 10.5 21c2.31 0 4.2-1.75 4.45-4H15V6h4V3h-7z"/></svg>
+      <span>Nhạc</span>
+    </button>
+  </nav>
+
+  <!-- ===== HERO / COUNTER SECTION ===== -->
+  <section id="home" class="hero-section">
+    <div class="hero-content">
+      <h1 class="hero-title">
+        <span class="title-glow">LOVE DAYS</span>
+      </h1>
+      <p class="hero-subtitle">Nguyễn Trọng Phúc &hearts; Đặng Thị Quỳnh Lưu</p>
+
+      <div class="counter-card glass">
+        <div class="couple-row">
+          <!-- HER -->
+          <div class="person-card">
+            <div class="avatar-frame her-glow">
+              <img src="images/luu.jpg" alt="Đặng Thị Quỳnh Lưu" onerror="this.style.display='none'; this.parentElement.classList.add('fallback');">
+              <span class="avatar-fallback">QL</span>
+            </div>
+            <span class="person-name">Quỳnh Lưu</span>
+          </div>
+
+          <!-- CENTER HEART + COUNTER -->
+          <div class="love-center">
+            <div class="heart-container">
+              <svg class="heart-svg" viewBox="0 0 32 32" aria-hidden="true">
+                <defs>
+                  <filter id="heart-glow">
+                    <feGaussianBlur stdDeviation="2" result="glow"/>
+                    <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+                  </filter>
+                  <linearGradient id="heart-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:#ff6b9d"/>
+                    <stop offset="100%" style="stop-color:#ee2b5b"/>
+                  </linearGradient>
+                </defs>
+                <path filter="url(#heart-glow)" fill="url(#heart-grad)" d="M16 28.72l-1.45-1.32C6.4 19.36 2 15.28 2 10.5 2 6.42 5.42 3 9.5 3c2.24 0 4.41 1.05 5.8 2.71L16 6.56l.7-.85C18.09 4.05 20.26 3 22.5 3 26.58 3 30 6.42 30 10.5c0 4.78-4.4 8.86-12.55 16.91L16 28.72z"/>
+              </svg>
+            </div>
+            <div class="start-date">14 · 02 · 2025</div>
+            <div class="counter-display">
+              <span class="counter-days" id="counter-days">0</span>
+              <span class="counter-label">ngày yêu nhau</span>
+            </div>
+            <div class="time-display">
+              <div class="time-unit">
+                <span class="time-value" id="counter-hours">00</span>
+                <span class="time-label">giờ</span>
+              </div>
+              <span class="time-sep">:</span>
+              <div class="time-unit">
+                <span class="time-value" id="counter-minutes">00</span>
+                <span class="time-label">phút</span>
+              </div>
+              <span class="time-sep">:</span>
+              <div class="time-unit">
+                <span class="time-value" id="counter-seconds">00</span>
+                <span class="time-label">giây</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- HIM -->
+          <div class="person-card">
+            <div class="avatar-frame him-glow">
+              <img src="images/phuc.jpg" alt="Nguyễn Trọng Phúc" onerror="this.style.display='none'; this.parentElement.classList.add('fallback');">
+              <span class="avatar-fallback">TP</span>
+            </div>
+            <span class="person-name">Trọng Phúc</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- NEXT MILESTONE BANNER -->
+      <div class="next-milestone glass" id="next-milestone">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
+        <span id="next-milestone-text">Đang tính...</span>
+      </div>
+    </div>
+
+    <div class="scroll-hint" aria-hidden="true">
+      <span>Cuộn xuống</span>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
+    </div>
+  </section>
+
+  <!-- ===== TIMELINE SECTION ===== -->
+  <section id="timeline" class="timeline-section">
+    <h2 class="section-title">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+      Hành Trình Tình Yêu
+    </h2>
+    <div class="timeline-container" id="timeline-container">
+      <!-- Rendered by JS -->
+    </div>
+  </section>
+
+  <!-- ===== NOTE / QUESTION SECTION ===== -->
+  <section id="love-question" class="question-section">
+    <div class="stars-bg"></div>
+    <div class="question-card glass">
+      <div class="decoration-heart">💖</div>
+      <p class="question-text">Công chúa có muốn tiếp tục tạo thêm nhiều kỉ niệm đẹp khác với anh không?</p>
+      
+      <div class="button-group">
+        <button id="btn-yes" class="answer-btn btn-yes">Có, em đồng ý! 💕</button>
+        <button id="btn-no" class="answer-btn btn-no">Không 😢</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== THANK YOU MODAL ===== -->
+  <div id="thank-you-modal" class="milestone-modal" role="dialog" aria-hidden="true">
+    <div class="modal-backdrop"></div>
+    <div class="modal-content glass thank-you-content">
+      <div class="modal-icon">💘</div>
+      <h2 class="modal-title">Cảm ơn em!</h2>
+      <p class="modal-message">
+        Anh vô cùng hạnh phúc vì có em bên cạnh.<br>
+        Chúng ta sẽ cùng nhau viết tiếp những trang sách thật đẹp nhé! 💑
+      </p>
+      <button class="modal-btn" id="btn-close-thank-you">Yêu em ❤️</button>
+    </div>
+  </div>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="site-footer">
+    <p class="footer-quote">Mãi bên nhau bạn nhớ 💋</p>
+    <p class="footer-copy">Made with ♥ by Phúc for Quỳnh Lưu</p>
+  </footer>
+
+  <!-- ===== AUDIO PLAYER (Fixed Bottom) ===== -->
+  <div class="audio-player glass" id="audio-player">
+    <div class="player-left">
+      <div class="visualizer" id="visualizer" aria-hidden="true">
+        <span class="viz-bar"></span><span class="viz-bar"></span><span class="viz-bar"></span>
+        <span class="viz-bar"></span><span class="viz-bar"></span><span class="viz-bar"></span>
+        <span class="viz-bar"></span><span class="viz-bar"></span><span class="viz-bar"></span>
+      </div>
+      <div class="track-info">
+        <span class="track-title" id="track-title">Chưa có bài hát</span>
+        <span class="track-artist" id="track-artist">Thêm nhạc vào thư mục audio/</span>
+      </div>
+    </div>
+
+    <div class="player-center">
+      <button class="player-btn" id="btn-prev" type="button" aria-label="Bài trước">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
+      </button>
+      <button class="player-btn play-btn" id="btn-play" type="button" aria-label="Phát nhạc">
+        <svg class="icon-play" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        <svg class="icon-pause" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" style="display:none"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+      </button>
+      <button class="player-btn" id="btn-next" type="button" aria-label="Bài tiếp">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
+      </button>
+    </div>
+
+    <div class="player-right">
+      <div class="progress-container" id="progress-container">
+        <span class="progress-time" id="current-time">0:00</span>
+        <div class="progress-bar">
+          <div class="progress-fill" id="progress-fill"></div>
+        </div>
+        <span class="progress-time" id="total-time">0:00</span>
+      </div>
+      <div class="volume-container">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+        <input type="range" class="volume-slider" id="volume-slider" min="0" max="100" value="70" aria-label="Âm lượng">
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== PLAYLIST PANEL ===== -->
+  <div class="playlist-panel glass" id="playlist-panel" role="dialog" aria-label="Danh sách nhạc" aria-hidden="true">
+    <div class="playlist-header">
+      <h3 class="playlist-title">Giai Điệu Tình Yêu</h3>
+      <button class="playlist-close" id="playlist-close" type="button" aria-label="Đóng playlist">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+      </button>
+    </div>
+    <div class="playlist-list" id="playlist-list">
+      <!-- Rendered by JS -->
+    </div>
+    <div class="playlist-footer">
+      <p class="playlist-hint">Thêm file MP3 vào thư mục <strong>audio/</strong> và cập nhật playlist trong <strong>js/app.js</strong></p>
+    </div>
+  </div>
+
+  <!-- ===== MILESTONE CELEBRATION MODAL ===== -->
+  <div class="milestone-modal" id="milestone-modal" role="dialog" aria-label="Kỉ niệm" aria-hidden="true">
+    <div class="modal-backdrop" id="modal-backdrop"></div>
+    <div class="modal-content glass">
+      <div class="confetti-container" id="confetti-container" aria-hidden="true"></div>
+      <button class="modal-close" id="modal-close" type="button" aria-label="Đóng">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+      </button>
+
+      <div class="modal-icon">
+        <svg class="modal-heart" viewBox="0 0 32 32"><path fill="url(#heart-grad)" d="M16 28.72l-1.45-1.32C6.4 19.36 2 15.28 2 10.5 2 6.42 5.42 3 9.5 3c2.24 0 4.41 1.05 5.8 2.71L16 6.56l.7-.85C18.09 4.05 20.26 3 22.5 3 26.58 3 30 6.42 30 10.5c0 4.78-4.4 8.86-12.55 16.91L16 28.72z"/></svg>
+      </div>
+      <h2 class="modal-title" id="modal-title">Happy Anniversary!</h2>
+      <p class="modal-date" id="modal-date"></p>
+      <p class="modal-message" id="modal-message"></p>
+
+      <!-- MEMORY CAROUSEL (Rewind) -->
+      <div class="memory-carousel-wrapper">
+        <h4 class="carousel-label">Khoảnh Khắc Của Chúng Ta</h4>
+        <div class="memory-carousel" id="memory-carousel">
+          <!-- Rendered by JS -->
+        </div>
+      </div>
+
+      <div class="modal-actions">
+        <button class="modal-btn rewind-btn" id="btn-rewind" type="button">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"/></svg>
+          Xem Lại
+        </button>
+      </div>
+
+      <p class="modal-footer-text" id="modal-footer-text"></p>
+    </div>
+  </div>
+
+  <!-- ===== PHOTO GALLERY LIGHTBOX ===== -->
+  <div class="gallery-lightbox" id="gallery-lightbox" role="dialog" aria-label="Xem ảnh kỷ niệm" aria-hidden="true">
+    <div class="gallery-backdrop" id="gallery-backdrop"></div>
+    <button class="gallery-close" id="gallery-close" type="button" aria-label="Đóng">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+    </button>
+    <button class="gallery-nav gallery-prev" id="gallery-prev" type="button" aria-label="Ảnh trước">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+    </button>
+    <div class="gallery-stage">
+      <img class="gallery-photo" id="gallery-photo" src="" alt="" />
+      <p class="gallery-caption" id="gallery-caption"></p>
+      <span class="gallery-counter" id="gallery-counter">1 / 5</span>
+    </div>
+    <button class="gallery-nav gallery-next" id="gallery-next" type="button" aria-label="Ảnh tiếp">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+    </button>
+    <div class="gallery-dots" id="gallery-dots"></div>
+  </div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
