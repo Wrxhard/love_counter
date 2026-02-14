@@ -1077,13 +1077,13 @@ a { text-decoration: none; color: inherit; }
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--warm-mid);
+  color: rgba(255, 255, 255, 0.8);
   transition: all 0.2s ease;
   z-index: 10;
 }
 
 .modal-close:hover {
-  color: var(--pink-600);
+  color: #fff;
   background: rgba(244, 114, 182, 0.15);
 }
 
@@ -1102,14 +1102,14 @@ a { text-decoration: none; color: inherit; }
   font-family: var(--font-display);
   font-size: clamp(1.5rem, 4vw, 2rem);
   font-weight: 600;
-  color: var(--pink-600);
+  color: #fff;
   margin-bottom: 8px;
 }
 
 .modal-date {
   font-size: 0.9rem;
   font-weight: 500;
-  color: var(--warm-mid);
+  color: rgba(255, 255, 255, 0.9);
   margin-bottom: 12px;
 }
 
@@ -1117,7 +1117,7 @@ a { text-decoration: none; color: inherit; }
   font-family: var(--font-display);
   font-size: 1.1rem;
   font-style: italic;
-  color: var(--warm-dark);
+  color: rgba(255, 255, 255, 0.95);
   line-height: 1.6;
   margin-bottom: 24px;
 }
@@ -1158,7 +1158,7 @@ a { text-decoration: none; color: inherit; }
   font-family: var(--font-display);
   font-size: 0.95rem;
   font-weight: 500;
-  color: var(--warm-mid);
+  color: #fff; /* White text */
   margin-bottom: 12px;
 }
 
@@ -1207,8 +1207,7 @@ a { text-decoration: none; color: inherit; }
   padding: 6px 4px 0; /* Adjusted padding */
   font-size: 0.75rem;
   font-weight: 600;
-  color: var(--warm-dark); /* Darker text for contrast */
-  text-align: center;
+  display: none; /* Hide caption */
   text-shadow: none;
 }
 
@@ -1256,7 +1255,7 @@ a { text-decoration: none; color: inherit; }
 
 .modal-footer-text {
   font-size: 0.85rem;
-  color: var(--warm-mid);
+  color: rgba(255, 255, 255, 0.8);
   font-style: italic;
 }
 
