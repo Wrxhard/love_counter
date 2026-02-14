@@ -66,7 +66,7 @@ const MILESTONES = [
   // Thêm sinh nhật anh (sửa ngày phù hợp)
   {
     id: 'his-birthday',
-    month: 1, day: 1, // ← SỬA NGÀY SINH NHẬT ANH TẠI ĐÂY
+    month: 11, day: 26, // ← SỬA NGÀY SINH NHẬT ANH TẠI ĐÂY
     title: 'Sinh Nhật Anh Phúc',
     icon: '🎂',
     message: 'Happy Birthday anh yêu!',
@@ -75,7 +75,7 @@ const MILESTONES = [
   // Thêm sinh nhật em (sửa ngày phù hợp)
   {
     id: 'her-birthday',
-    month: 1, day: 2, // ← SỬA NGÀY SINH NHẬT EM TẠI ĐÂY
+    month: 4, day: 16, // ← SỬA NGÀY SINH NHẬT EM TẠI ĐÂY
     title: 'Sinh Nhật Em Lưu',
     icon: '🎂',
     message: 'Happy Birthday em yêu! Chúc em mãi xinh đẹp!',
@@ -593,7 +593,13 @@ function showMilestoneModal(milestone) {
 
   // Populate content
   document.getElementById('modal-title').textContent = `${milestone.icon} ${milestone.title}`;
-  document.getElementById('modal-date').textContent = formatDateVN(now);
+  // Use milestone year if available (e.g. start date), otherwise use current date (for recurring)
+  if (milestone.year) {
+    const mDate = new Date(milestone.year, milestone.month - 1, milestone.day);
+    document.getElementById('modal-date').textContent = formatDateVN(mDate);
+  } else {
+    document.getElementById('modal-date').textContent = formatDateVN(now);
+  }
   document.getElementById('modal-message').textContent = milestone.message;
 
   // Days count
